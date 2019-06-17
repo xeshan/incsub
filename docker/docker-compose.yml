@@ -2,12 +2,12 @@ version: '2'
 services:
  nginx:
    ports:
-     - 80:80
+     - 8000:8000
      - 443:443
    build:
      dockerfile: Dockerfile
      context: ./web
-   depends_on:
+   links:
       - php
 
  php:
