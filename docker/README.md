@@ -4,10 +4,6 @@ This repository aimed to dockerise WEB (nginx) and PHP (php-fpm) service.
 
 ## Get it up and running
 
-- [Install docker on your machine.][install-docker]
-
-- [Install docker-compose on your machine.][install-docker-compose]
-
 - Clone this repository.
 
 ``` bash
