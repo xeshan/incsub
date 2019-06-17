@@ -2,6 +2,10 @@
 
 This repository aimed to dockerise WEB (nginx) and PHP (php-fpm) service. 
 
+- *php* folder contains dockerfile for php-fpm container which is running on 9000 port.  This container also running Memcache on port 11211 and ImageMagick.  
+- *web* folder contains dockerfile for Nginx which is running on 80 port and its based on openresty.  This folder also have configuration file.
+
+
 ## Get it up and running
 
 - Clone this repository.
