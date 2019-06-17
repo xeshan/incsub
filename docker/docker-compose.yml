@@ -1,0 +1,16 @@
+version: '2'
+services:
+ nginx:
+   ports:
+     - 80:80
+     - 443:443
+   build:
+     dockerfile: Dockerfile
+     context: ./web
+   depends_on:
+      - php
+
+ php:
+   build:
+     dockerfile: Dockerfile
+     context: ./php
