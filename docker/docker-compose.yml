@@ -7,7 +7,7 @@ services:
    build:
      dockerfile: Dockerfile
      context: ./web
-   depends_on:
+   links:
       - php
 
  php:
