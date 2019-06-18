@@ -8,7 +8,7 @@ For quick you can launch complete infra by click launch stack:
 
 | AWS Region | Short name | | 
 | -- | -- | -- |
-| US East (N. Virginia) | us-east-1 | [![cloudformation-launch-button](https://ecswithcf.s3.amazonaws.com/launch-stack.jpg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Incsub-trial&templateURL=https://ecswithcf.s3.amazonaws.com/master.yml) |
+| US East (N. Virginia) | us-east-1 | [![cloudformation-launch-button](https://ecswithcf.s3.amazonaws.com/launch-stack.jpg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Incsub-trial&templateURL=https://incsub-trial.s3.amazonaws.com/master.yml) |
 
 ## Overview
 
