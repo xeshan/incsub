@@ -1,6 +1,16 @@
+# Incsub trial
+
+
 ## Overview
 
-This repository aimed to dockerise WEB (nginx) and PHP (php-fpm) service. 
+This repository aimed to dockerise WEB (nginx) and PHP (php-fpm) service AND deploy to ECS which provision ECS infrastructure with CloudFormation
+
+There is two folder
+
+[docker](docker)
+[infra](infra)
+
+Dockerise application
 
 - *php* folder contains dockerfile for php-fpm container which is running on 9000 port.  This container also running Memcache on port 11211 and ImageMagick.  
 - *web* folder contains dockerfile for Nginx which is running on 80 port and its based on openresty.  This folder also have configuration file.
@@ -34,7 +44,6 @@ That's it! You have now local cluster running web and php services.
 http://localhost  `will browse from Web container`
 http://localhost/info.php  `will browse from PHP container`
 
-# Incsub trial
 ### ECS Cluster provision with CloudFormation
 
 This repository aimed to design [Amazon EC2 Container Service (Amazon ECS)](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html) based infrastructure which provision with [AWS CloudFormation](https://aws.amazon.com/cloudformation/).
