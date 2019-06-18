@@ -60,8 +60,6 @@ Resources:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
         DesiredCount: 2
-        Listener: !GetAtt ALB.Outputs.Listener
-        Path: /products
 
   WebsiteService:
     Type: AWS::CloudFormation::Stack
