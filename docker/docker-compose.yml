@@ -1,8 +1,8 @@
-version: '2'
+version: '3'
 services:
  nginx:
    ports:
-     - 8000:8000
+     - 80:80
      - 443:443
    build:
      dockerfile: Dockerfile
