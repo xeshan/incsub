@@ -60,8 +60,10 @@ Resources:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
         DesiredCount: 2
+        Listener: !GetAtt ALB.Outputs.Listener
+        Path: /
 
-  WebsiteService:
+  WebService:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: https://ecswithcf.s3.amazonaws.com/service/web.yml
@@ -69,8 +71,7 @@ Resources:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
         DesiredCount: 2
-        PHPServiceUrl:
-          !Join ["/", [!GetAtt ALB.Outputs.LoadBalancerUrl, "products"]]
+        PHPServiceUrl: /
         Listener: !GetAtt ALB.Outputs.Listener
         Path: /
         ECSServiceAutoScalingRoleARN: !GetAtt ECS.Outputs.ECSServiceAutoScalingRole
@@ -83,11 +84,3 @@ Resources:
         Cluster: !GetAtt ECS.Outputs.Cluster
         ECSAutoScalingGroupName: !GetAtt ECS.Outputs.ECSAutoScalingGroupName
 
-Outputs:
-  ProductServiceUrl:
-    Description: The URL endpoint for the product service
-    Value: !Join ["/", [!GetAtt ALB.Outputs.LoadBalancerUrl, "products"]]
-
-  WebsiteServiceUrl:
-    Description: The URL endpoint for the website service
-    Value: !Join ["", [!GetAtt ALB.Outputs.LoadBalancerUrl, "/"]]
