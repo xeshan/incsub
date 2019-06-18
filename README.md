@@ -7,8 +7,8 @@ This repository aimed to dockerise WEB (nginx) and PHP (php-fpm) service AND dep
 
 There is two folder
 
-- [docker](docker)
-- [infra](infra)
+- [docker](docker) : This folder contains Dockerfile which can use to dockerise Nginx and PHP-fpm services.
+- [infra](infra) : Infra folder contains the CloudFormation templates which provision ECS cluster.
 
 Dockerise application
 
