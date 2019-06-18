@@ -1,0 +1,95 @@
+Description: >
+
+  This template deploy VPC with public and private subnets which have two Availabilty Zones + Internet Gateway with default 
+  route on the public subnets and NAT Gateways (one in each AZ) and default routes for them in the private subnets.
+
+  After complete infrastrucutre its then deploys highly available ECS cluster using an AutoScaling Group, with  ECS hosts 
+  distributed across multiple Availability Zones. 
+
+  Finally, it deploys ECS services (nginx + PHP) from containers published in Amazon ECR.
+
+
+Resources:
+  VPC:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ecswithcf.s3.amazonaws.com/incsub-vpc.yml
+      Parameters:
+        EnvironmentName: !Ref AWS::StackName
+        VpcCIDR: 10.180.0.0/16
+        PublicSubnet1CIDR: 10.180.8.0/21
+        PublicSubnet2CIDR: 10.180.16.0/21
+        PrivateSubnet1CIDR: 10.180.24.0/21
+        PrivateSubnet2CIDR: 10.180.32.0/21
+
+  SecurityGroups:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ecswithcf.s3.amazonaws.com/incsub-sg.yml
+      Parameters:
+        EnvironmentName: !Ref AWS::StackName
+        VPC: !GetAtt VPC.Outputs.VPC
+
+  ALB:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ecswithcf.s3.amazonaws.com/incsub-lb.yml
+      Parameters:
+        EnvironmentName: !Ref AWS::StackName
+        VPC: !GetAtt VPC.Outputs.VPC
+        Subnets: !GetAtt VPC.Outputs.PublicSubnets
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.LoadBalancerSecurityGroup
+
+  ECS:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ecswithcf.s3.amazonaws.com/incsub-ecs-cluster.yml
+      Parameters:
+        EnvironmentName: !Ref AWS::StackName
+        InstanceType: t2.micro
+        ClusterSize: 2
+        VPC: !GetAtt VPC.Outputs.VPC
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+        Subnets: !GetAtt VPC.Outputs.PrivateSubnets
+
+  PHPService:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ecswithcf.s3.amazonaws.com/service/php.yml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        DesiredCount: 2
+        Listener: !GetAtt ALB.Outputs.Listener
+        Path: /products
+
+  WebsiteService:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ecswithcf.s3.amazonaws.com/service/web.yml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        DesiredCount: 2
+        PHPServiceUrl:
+          !Join ["/", [!GetAtt ALB.Outputs.LoadBalancerUrl, "products"]]
+        Listener: !GetAtt ALB.Outputs.Listener
+        Path: /
+        ECSServiceAutoScalingRoleARN: !GetAtt ECS.Outputs.ECSServiceAutoScalingRole
+
+  AutoScaling:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ecswithcf.s3.amazonaws.com/incsub-autoscaling.yml
+      Parameters:
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        ECSAutoScalingGroupName: !GetAtt ECS.Outputs.ECSAutoScalingGroupName
+
+Outputs:
+  ProductServiceUrl:
+    Description: The URL endpoint for the product service
+    Value: !Join ["/", [!GetAtt ALB.Outputs.LoadBalancerUrl, "products"]]
+
+  WebsiteServiceUrl:
+    Description: The URL endpoint for the website service
+    Value: !Join ["", [!GetAtt ALB.Outputs.LoadBalancerUrl, "/"]]

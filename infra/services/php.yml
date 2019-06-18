@@ -45,7 +45,7 @@ Resources:
       ContainerDefinitions:
         - Name: php-service
           Essential: true
-          Image: 510547555808.dkr.ecr.us-east-1.amazonaws.com/incsub-php:v9
+          Image: 510547555808.dkr.ecr.us-east-1.amazonaws.com/incsub-php:v1.0
           Memory: 128
           PortMappings:
             - ContainerPort: 9000

@@ -34,9 +34,6 @@ Parameters:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: /aws/service/ecs/optimized-ami/amazon-linux/recommended/image_id
 
-  KeyName:
-    Description: existing EC2 KeyPair
-    Type: AWS::EC2::KeyPair::KeyName
 
 Resources:
   ECSCluster:
@@ -78,7 +75,6 @@ Resources:
     Properties:
       ImageId: !Ref ECSAMI
       InstanceType: !Ref InstanceType
-      KeyName: !Ref KeyName
       SecurityGroups:
         - !Ref SecurityGroup
       IamInstanceProfile: !Ref ECSInstanceProfile
