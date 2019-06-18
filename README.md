@@ -7,8 +7,8 @@ This repository aimed to dockerise WEB (nginx) and PHP (php-fpm) service AND dep
 
 There is two folder
 
-[docker](docker)
-[infra](infra)
+- [docker](docker)
+- [infra](infra)
 
 Dockerise application
 
