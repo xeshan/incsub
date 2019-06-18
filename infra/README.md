@@ -33,11 +33,11 @@ Following are templates included in this repo.
 | Template | Description |
 | --- | --- | 
 | [master.yml](master.yml) | This is the master template - deploy it to CloudFormation and it includes all of the others automatically. |
-| [incsub-vpc.yml](infra/incsub-vpc.yml) | Template for VPC with public and private subnets across two different Availabilty Zones with Internet Gateway and default route on the public subnets + NAT Gateways (one in each AZ) and default routes for them in the private subnets.|
-| [incsub-sg.yml](infra/incsub-sg.yml) | This template contains the [security groups](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html) required by the entire stack.|
-| [incsub-lb.yml](infra/incsub-lb.yml) | Template for ALB  |
-| [incsub-ecs-cluster.yml](infra/ecs-cluster.yml) | Template for ECS cluster deployment on private subnets + Auto Scaling group.
-| [incsub-autoscaling.yml](infra/autoscaling.yml) | Template for autoscaling. |
+| [incsub-vpc.yml](incsub-vpc.yml) | Template for VPC with public and private subnets across two different Availabilty Zones with Internet Gateway and default route on the public subnets + NAT Gateways (one in each AZ) and default routes for them in the private subnets.|
+| [incsub-sg.yml](incsub-sg.yml) | This template contains the [security groups](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html) required by the entire stack.|
+| [incsub-lb.yml](incsub-lb.yml) | Template for ALB  |
+| [incsub-ecs-cluster.yml](incsub-ecs-cluster.yml) | Template for ECS cluster deployment on private subnets + Auto Scaling group.
+| [incsub-autoscaling.yml](incsub-autoscaling.yml) | Template for autoscaling. |
 | [services/php.yml](services/php.yml) | PHP-fpm service|
 | [services/web.yml](services/web.yml) | Web service (Nginx) service |
 
