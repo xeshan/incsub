@@ -34,12 +34,12 @@ Following are templates included in this repo.
 | --- | --- | 
 | [master.yaml](master.yaml) | This is the master template - deploy it to CloudFormation and it includes all of the others automatically. |
 | [infra/incsub-vpc.yml](infra/incsub-vpc.yml) | Template for VPC with public and private subnets across two different Availabilty Zones with Internet Gateway and default route on the public subnets + NAT Gateways (one in each AZ) and default routes for them in the private subnets.|
-| [infra/incsub-sg.yml](infrastructure/incsub-sg.yml) | This template contains the [security groups](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html) required by the entire stack.|
-| [infra/incsub-lb.yml](infrastructure/incsub-lb.yml) | Template for ALB  |
+| [infra/incsub-sg.yml](infra/incsub-sg.yml) | This template contains the [security groups](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html) required by the entire stack.|
+| [infra/incsub-lb.yml](infra/incsub-lb.yml) | Template for ALB  |
 | [infra/incsub-ecs-cluster.yml](infra/ecs-cluster.yml) | Template for ECS cluster deployment on private subnets + Auto Scaling group.
 | [infra/incsub-autoscaling.yml](infra/autoscaling.yml) | Template for autoscaling. |
-| [services/product-service/service.yaml](services/product-service/service.yaml) | PHP-fpm service|
-| [services/website-service/service.yaml](services/website-service/service.yaml) | Web service (Nginx) service |
+| [services/php.yml](services/php.yml) | PHP-fpm service|
+| [services/web.yml](services/web.yml) | Web service (Nginx) service |
 
 
 
