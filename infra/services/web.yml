@@ -50,16 +50,16 @@ Resources:
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
-        - ContainerName: "website-service"
+        - ContainerName: "web-service"
           ContainerPort: 8000
           TargetGroupArn: !Ref TargetGroup
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: website-service
+      Family: web-php-service
       ContainerDefinitions:
-        - Name: website-service
+        - Name: web-service
           Essential: true
           Image: 510547555808.dkr.ecr.us-east-1.amazonaws.com/incsub-nginx:v1.0
           Memory: 128
