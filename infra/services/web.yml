@@ -58,10 +58,11 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: web-php-service
+      NetworkMode: host
       ContainerDefinitions:
         - Name: web-service
           Essential: true
-          Image: 510547555808.dkr.ecr.us-east-1.amazonaws.com/incsub-nginx:v1.0
+          Image: 510547555808.dkr.ecr.us-east-1.amazonaws.com/incsub-nginx:v1.0.0
           Memory: 128
           Environment:
             - Name: PRODUCT_SERVICE_URL
