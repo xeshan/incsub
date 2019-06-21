@@ -73,7 +73,7 @@ Resources:
         DesiredCount: 2
         PHPServiceUrl: /
         Listener: !GetAtt ALB.Outputs.Listener
-        Path: /
+        Path: /*
         ECSServiceAutoScalingRoleARN: !GetAtt ECS.Outputs.ECSServiceAutoScalingRole
 
   AutoScaling:
