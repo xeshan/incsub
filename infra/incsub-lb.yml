@@ -18,6 +18,11 @@ Parameters:
     Description: Security Group which applied to the Application Load Balancer
     Type: AWS::EC2::SecurityGroup::Id
 
+  LoadBalancerCertificateArn:
+    Description: 'Optional Amazon Resource Name (ARN) of the certificate to associate with the load balancer.'
+    Type: String
+    Default: '' 
+    
 Resources:
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -40,6 +45,18 @@ Resources:
         - Type: forward
           TargetGroupArn: !Ref DefaultTargetGroup
 
+  LoadBalancerHttpsListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      Certificates:
+      - CertificateArn: !Ref LoadBalancerCertificateArn
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref DefaultHttpsTargetGroup          
+
   DefaultTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
@@ -47,6 +64,14 @@ Resources:
       VpcId: !Ref VPC
       Port: 80
       Protocol: HTTP
+
+  DefaultHttpsTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub ${EnvironmentName}-ssl-default
+      VpcId: !Ref VPC
+      Port: 443
+      Protocol: HTTPS      
 
 Outputs:
   LoadBalancer:
