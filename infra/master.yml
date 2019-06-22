@@ -75,6 +75,7 @@ Resources:
         Listener: !GetAtt ALB.Outputs.Listener
         Path: /*
         ECSServiceAutoScalingRoleARN: !GetAtt ECS.Outputs.ECSServiceAutoScalingRole
+        HttpsListner: !GetAtt ALB.Outputs.HttpsListner 
 
   AutoScaling:
     Type: AWS::CloudFormation::Stack

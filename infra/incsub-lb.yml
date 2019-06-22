@@ -21,8 +21,8 @@ Parameters:
   LoadBalancerCertificateArn:
     Description: 'Optional Amazon Resource Name (ARN) of the certificate to associate with the load balancer.'
     Type: String
-    Default: '' 
-    
+    Default: 'arn:aws:acm:us-east-1:510547555808:certificate/9c4f74d8-7b5c-4917-b9de-175ef5bc0516' 
+
 Resources:
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -85,3 +85,7 @@ Outputs:
   Listener:
     Description: A reference to a port 80 listener
     Value: !Ref LoadBalancerListener
+
+  HttpsListner:
+    Description: A reference to a port 443 listener
+    Value: !Ref LoadBalancerHttpsListener  
