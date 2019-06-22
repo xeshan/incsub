@@ -21,7 +21,6 @@ Parameters:
   LoadBalancerCertificateArn:
     Description: 'Optional Amazon Resource Name (ARN) of the certificate to associate with the load balancer.'
     Type: String
-    Default: 'arn:aws:acm:us-east-1:510547555808:certificate/9c4f74d8-7b5c-4917-b9de-175ef5bc0516' 
 
 Resources:
   LoadBalancer:
@@ -42,8 +41,14 @@ Resources:
       Port: 80
       Protocol: HTTP
       DefaultActions:
-        - Type: forward
-          TargetGroupArn: !Ref DefaultTargetGroup
+        - RedirectConfig:
+            Host: "#{host}"
+            Path: "/#{path}"
+            Port: 443
+            Protocol: "HTTPS"
+            Query: "#{query}"
+            StatusCode: HTTP_301      
+          Type: redirect
 
   LoadBalancerHttpsListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
@@ -89,3 +94,7 @@ Outputs:
   HttpsListner:
     Description: A reference to a port 443 listener
     Value: !Ref LoadBalancerHttpsListener  
+
+  LoadBalancerCertificateArn:
+    Description: ssl certificate
+    Value: !Ref LoadBalancerCertificateArn 

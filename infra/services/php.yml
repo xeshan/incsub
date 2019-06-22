@@ -15,9 +15,9 @@ Parameters:
     Type: Number
     Default: 2
 
-  Listener:
-    Description: Application Load Balancer listener 
-    Type: String
+  # Listener:
+  #   Description: Application Load Balancer listener 
+  #   Type: String
 
   Path:
     Description: ALB path

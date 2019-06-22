@@ -8,6 +8,10 @@ Description: >
 
   Finally, it deploys ECS services (nginx + PHP) from containers published in Amazon ECR.
 
+Parameters:
+  LoadBalancerCertificateArn:
+    Description: ALB ssl certificate
+    Type: String
 
 Resources:
   VPC:
@@ -39,6 +43,7 @@ Resources:
         VPC: !GetAtt VPC.Outputs.VPC
         Subnets: !GetAtt VPC.Outputs.PublicSubnets
         SecurityGroup: !GetAtt SecurityGroups.Outputs.LoadBalancerSecurityGroup
+        LoadBalancerCertificateArn: !Ref LoadBalancerCertificateArn
 
   ECS:
     Type: AWS::CloudFormation::Stack
@@ -60,7 +65,6 @@ Resources:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
         DesiredCount: 2
-        Listener: !GetAtt ALB.Outputs.Listener
         Path: /
 
   WebService:
@@ -72,7 +76,6 @@ Resources:
         Cluster: !GetAtt ECS.Outputs.Cluster
         DesiredCount: 2
         PHPServiceUrl: /
-        Listener: !GetAtt ALB.Outputs.Listener
         Path: /*
         ECSServiceAutoScalingRoleARN: !GetAtt ECS.Outputs.ECSServiceAutoScalingRole
         HttpsListner: !GetAtt ALB.Outputs.HttpsListner 
