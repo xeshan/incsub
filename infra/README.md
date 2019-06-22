@@ -15,7 +15,7 @@ For quick you can launch complete infra by click launch stack:
 
 It will ask for SSL Certificate Arn which were added in prerequisite step
 
-(https://incsub-trial.s3.amazonaws.com/img/SslCertArn.png)
+[!(https://incsub-trial.s3.amazonaws.com/img/SslCertArn.png)]
 
 ## Overview
 
