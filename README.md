@@ -41,18 +41,29 @@ if want to run complete structure as daemon (background process) then add `-d`
 That's it! You have now local cluster running web and php services.
 
 
-http://localhost  `will browse from Web container`
-http://localhost/info.php  `will browse from PHP container`
+- http://localhost  `will browse from Web container`
+- http://localhost/info.php  `will browse from PHP container`
 
 ### ECS Cluster provision with CloudFormation
 
 This repository aimed to design [Amazon EC2 Container Service (Amazon ECS)](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html) based infrastructure which provision with [AWS CloudFormation](https://aws.amazon.com/cloudformation/).
+
+## Prerequisite step
+- Import SSL certificate 
+
+## Step 1
 
 For quick you can launch complete infra by click launch stack:
 
 | AWS Region | Short name | | 
 | -- | -- | -- |
 | US East (N. Virginia) | us-east-1 | [![cloudformation-launch-button](https://ecswithcf.s3.amazonaws.com/launch-stack.jpg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Incsub-trial&templateURL=https://incsub-trial.s3.amazonaws.com/master.yml) |
+
+## Step 2
+
+It will ask for SSL Certificate Arn which were added in prerequisite step
+
+![arn](https://incsub-trial.s3.amazonaws.com/img/SslCertArn.png)
 
 ## Overview
 
