@@ -10,14 +10,18 @@ Description: >
 
 Parameters:
   LoadBalancerCertificateArn:
-    Description: ALB ssl certificate
+    Description: ALB ssl certificate Arn
     Type: String
+
+  KeyPair:
+    Description: SSH key pair 
+    Type: String    
 
 Resources:
   VPC:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://incsub-test.s3.amazonaws.com/incsub-vpc.yml
+      TemplateURL: https://incsub-trial.s3.amazonaws.com/incsub-vpc.yml
       Parameters:
         EnvironmentName: !Ref AWS::StackName
         VpcCIDR: 10.180.0.0/16
@@ -29,7 +33,7 @@ Resources:
   SecurityGroups:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://incsub-test.s3.amazonaws.com/incsub-sg.yml
+      TemplateURL: https://incsub-trial.s3.amazonaws.com/incsub-sg.yml
       Parameters:
         EnvironmentName: !Ref AWS::StackName
         VPC: !GetAtt VPC.Outputs.VPC
@@ -37,7 +41,7 @@ Resources:
   ALB:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://incsub-test.s3.amazonaws.com/incsub-lb.yml
+      TemplateURL: https://incsub-trial.s3.amazonaws.com/incsub-lb.yml
       Parameters:
         EnvironmentName: !Ref AWS::StackName
         VPC: !GetAtt VPC.Outputs.VPC
@@ -48,7 +52,7 @@ Resources:
   ECS:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://incsub-test.s3.amazonaws.com/incsub-ecs-cluster.yml
+      TemplateURL: https://incsub-trial.s3.amazonaws.com/incsub-ecs-cluster.yml
       Parameters:
         EnvironmentName: !Ref AWS::StackName
         InstanceType: t2.micro
@@ -56,11 +60,12 @@ Resources:
         VPC: !GetAtt VPC.Outputs.VPC
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         Subnets: !GetAtt VPC.Outputs.PrivateSubnets
+        KeyName: !Ref KeyPair
 
   PHPService:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://incsub-test.s3.amazonaws.com/services/php.yml
+      TemplateURL: https://incsub-trial.s3.amazonaws.com/services/php.yml
       Parameters:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
@@ -70,7 +75,7 @@ Resources:
   WebService:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://incsub-test.s3.amazonaws.com/services/web.yml
+      TemplateURL: https://incsub-trial.s3.amazonaws.com/services/web.yml
       Parameters:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
@@ -83,7 +88,7 @@ Resources:
   AutoScaling:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://incsub-test.s3.amazonaws.com/incsub-autoscaling.yml
+      TemplateURL: https://incsub-trial.s3.amazonaws.com/incsub-autoscaling.yml
       Parameters:
         Cluster: !GetAtt ECS.Outputs.Cluster
         ECSAutoScalingGroupName: !GetAtt ECS.Outputs.ECSAutoScalingGroupName

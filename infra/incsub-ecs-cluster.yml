@@ -34,10 +34,10 @@ Parameters:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: /aws/service/ecs/optimized-ami/amazon-linux/recommended/image_id
   
-  # KeyName:
-  #   Description: existing EC2 KeyPair
-  #   Type: AWS::EC2::KeyPair::KeyName
-  #   Default: incsub  
+  KeyName:
+    Description: existing EC2 KeyPair
+    Type: AWS::EC2::KeyPair::KeyName
+#    ConstraintDescription: incsub  
 
 Resources:
   ECSCluster:
@@ -79,7 +79,7 @@ Resources:
     Properties:
       ImageId: !Ref ECSAMI
       InstanceType: !Ref InstanceType
-  #    KeyName: !Ref KeyName
+      KeyName: !Ref KeyName
       SecurityGroups:
         - !Ref SecurityGroup
       IamInstanceProfile: !Ref ECSInstanceProfile
@@ -93,7 +93,6 @@ Resources:
           /opt/aws/bin/cfn-signal -e $? --region ${AWS::Region} --stack ${AWS::StackName} --resource ECSAutoScalingGroup
           /usr/bin/enable-ec2-spot-hibernation
   
-
     Metadata:
       AWS::CloudFormation::Init:
         config:
