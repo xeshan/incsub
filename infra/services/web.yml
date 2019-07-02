@@ -198,8 +198,8 @@ Resources:
   CPUScaleOutAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
-      AlarmName: CPU utilization greater than 70%
-      AlarmDescription: Alarm if cpu utilization greater than 70% of reserved cpu
+      AlarmName: CPU utilization greater than 75%
+      AlarmDescription: Alarm if cpu utilization greater than 75% of reserved cpu
       Namespace: AWS/ECS
       MetricName: CPUUtilization
       Dimensions:
@@ -209,8 +209,8 @@ Resources:
           Value: !GetAtt Service.Name
       Statistic: Maximum
       Period: "60"
-      EvaluationPeriods: "3"
-      Threshold: "70"
+      EvaluationPeriods: "1"
+      Threshold: "75"
       ComparisonOperator: GreaterThanThreshold
       AlarmActions:
         - !Ref ServiceScaleOutPolicy
@@ -218,8 +218,8 @@ Resources:
   CPUScaleInAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
-      AlarmName: CPU utilization less than 50%
-      AlarmDescription: Alarm if cpu utilization greater than 50% of reserved cpu
+      AlarmName: CPU utilization less than 40%
+      AlarmDescription: Alarm if cpu utilization greater than 40% of reserved cpu
       Namespace: AWS/ECS
       MetricName: CPUUtilization
       Dimensions:
@@ -228,9 +228,9 @@ Resources:
         - Name: ServiceName
           Value: !GetAtt Service.Name
       Statistic: Maximum
-      Period: "60"
+      Period: "120"
       EvaluationPeriods: "10"
-      Threshold: "50"
+      Threshold: "40"
       ComparisonOperator: LessThanThreshold
       AlarmActions:
         - !Ref ServiceScaleInPolicy
